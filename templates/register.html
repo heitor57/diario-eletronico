@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% load crispy_forms_tags %}
+  {% load static %}
+
+<!-- <input class="teste" type="submit" name="submit" value="Enviar"> -->
+
+<form class='container' id="post_form" method="post" action="" enctype="multipart/form-data">
+
+  {% csrf_token %}
+
+  <h1 class="mt-2">Identificação</h1>
+  (Os dados pessoais não serão disponibilizados)
+  <hr class="mt-0 mb-4">
+  <div class='row'>
+    <div class="col-4">
+      {{ business_form.first_name|as_crispy_field }}
+    </div>
+    <div class="col-4">
+      {{ business_form.last_name|as_crispy_field }}
+    </div>
+    <div class="col-4">
+      {{ business_form.email|as_crispy_field }}
+    </div>
+  </div>
+  <h1 class="mt-2">Negócio</h1>
+  <hr class="mt-0 mb-4">
+  <div class='row'>
+    <div class="col-4">
+      {{ business_form.name|as_crispy_field }}
+    </div>
+    <div class="col-4">
+      {{ business_form.city|as_crispy_field }}
+    </div>
+    <div class="col-4">
+      {{ business_form.neighborhood|as_crispy_field }}
+    </div>
+  </div>
+
+  <div class='row'>
+    <div class="col-5">
+      {{ business_form.delivery|as_crispy_field }}
+      {{ business_form.withdraw|as_crispy_field }}
+      {{ business_form.time|as_crispy_field }}
+      {{ business_form.cell_phone|as_crispy_field }}
+      {{ business_form.telephone|as_crispy_field }}
+      {{ business_form.category|as_crispy_field }}
+    </div>
+    <div class="col1-8">
+      {{ business_form.description|as_crispy_field }}
+    </div>
+  </div>
+
+
+  <h2>Imagens</h2>
+  (Caso não seja definido uma imagem para logo ou banner uma imagem padrão será utilizada)
+  <hr class="mt-0 mb-4">
+
+  {{ business_form.logo|as_crispy_field }}
+  {{ business_form.banner|as_crispy_field }}
+
+
+  <br>
+  <h2>Imagens adicionais </h2>
+  (Opcional. Escolha imagens que ajudem os usuários a entenderem o negócio.)
+  <hr class="mt-0 mb-4">
+
+  {{ formset.management_form }}
+  {% for form in formset %}
+  {{ form.name.errors }}
+  <div class="row form-row spacer">
+    <div class="col-4">
+      <div class="input-group">
+	{{form.img}}
+	<div class="input-group-append">
+	  <button class="btn btn-success add-form-row">+</button>
+	</div>
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+
+  <h2>Palavras-chave</h2>
+  (Opcional. Escolha palavras-chave que resumam o negócio.)
+  <hr class="mt-0 mb-4">
+
+  {{ tag_formset.management_form }}
+  {% for form in tag_formset %}
+
+  {{ form.name.errors }}
+  <div class="row tag-row spacer">
+    <div class="col-4">
+      <div class="input-group">
+	{{form.name}}
+	<div class="input-group-append">
+	  <button class="btn btn-success add-tag-row">+</button>
+	</div>
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+  <br>
+  <div class="btn-group" role="group" aria-label="fbts1">
+    <input class="btn btn-success nopopup" type="submit" name="submit" value="Enviar">
+    <input class="btn btn-info popup" type="submit" name="preview" value="Prévia"/>
+  </div>
+</form>
+
+
+<!-- Thanks to: https://gist.github.com/taranjeet/71b7826b60f42e5d239cf3b3abbf292f#file-create_normal-html -->
+<script type='text/javascript'>
+function updateElementIndex(el, prefix, ndx) {
+    var id_regex = new RegExp('(' + prefix + '-\\d+)');
+    var replacement = prefix + '-' + ndx;
+    if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+    if (el.id) el.id = el.id.replace(id_regex, replacement);
+    if (el.name) el.name = el.name.replace(id_regex, replacement);
+}
+function cloneMore(selector, prefix) {
+
+    var newElement = $(selector).clone(true);
+    var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+    console.log('#id_' + prefix + '-TOTAL_FORMS')
+    console.log($(selector))
+    console.log(newElement.find(':input').not(':input[type=button], :input[type=submit], :input[type=reset]').not(':button'))
+
+
+    newElement.find(':input').not(':input[type=button], :input[type=submit], :input[type=reset]').not(':button').each(function() {
+        var name = $(this).attr('name').replace('-' + (total-1) + '-', '-' + total + '-');
+        var id = 'id_' + name;
+        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+    });
+    newElement.find('label').each(function() {
+        var forValue = $(this).attr('for');
+        if (forValue) {
+          forValue = forValue.replace('-' + (total-1) + '-', '-' + total + '-');
+          $(this).attr({'for': forValue});
+        }
+    });
+    total++;
+    $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+    $(selector).after(newElement);
+    var conditionRow = $('.'+prefix+'-row:not(:last)');
+    conditionRow.find('.btn.add-'+prefix+'-row')
+    .removeClass('btn-success').addClass('btn-danger')
+    .removeClass('add-'+prefix+'-row').addClass('remove-'+prefix+'-row')
+    .html('-');
+    return false;
+}
+function deleteForm(prefix, btn) {
+    var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+    if (total > 1){
+        btn.closest('.'+prefix+'-row').remove();
+        var forms = $('.'+prefix+'-row');
+        $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+        for (var i=0, formCount=forms.length; i<formCount; i++) {
+            $(forms.get(i)).find(':input').each(function() {
+                updateElementIndex(this, prefix, i);
+            });
+        }
+    }
+    return false;
+}
+$(document).on('click', '.add-form-row', function(e){
+    e.preventDefault();
+    cloneMore('.form-row:last', 'form');
+    return false;
+});
+$(document).on('click', '.remove-form-row', function(e){
+    e.preventDefault();
+    deleteForm('form', $(this));
+    return false;
+});
+$(document).on('click', '.add-tag-row', function(e){
+    e.preventDefault();
+    cloneMore('.tag-row:last', 'tag');
+    return false;
+});
+$(document).on('click', '.remove-tag-row', function(e){
+    e.preventDefault();
+    deleteForm('tag', $(this));
+    return false;
+});
+
+</script>
+
+{% endblock %}

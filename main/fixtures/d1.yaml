@@ -1,0 +1,36 @@
+- model: main.Course
+  fields:
+    id: MAT1
+    name: Matemática 1
+- model: main.Course
+  fields:
+    id: MAT2
+    name: Matemática 2
+- model: main.Course
+  fields:
+    id: MAT3
+    name: Matemática 3
+- model: main.Course
+  fields:
+    id: MAT4
+    name: Matemática 4
+- model: auth.user
+  pk: 120
+  fields:
+    username: a
+    password: 123
+- model: auth.user
+  pk: 121
+  fields:
+    username: b
+    password: 123
+- model: auth.user
+  pk: 122
+  fields:
+    username: c
+    password: 123
+- model: auth.user
+  pk: 123
+  fields:
+    username: d
+    password: 123
