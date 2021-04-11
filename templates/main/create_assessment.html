@@ -10,4 +10,5 @@
 </form>
 
 <a href="{% url 'login' %}">Back to login</a>
+<a href="{{ request.META.HTTP_REFERER }}" class="btn btn-primary" class>Back</a>
 {% endblock %}
