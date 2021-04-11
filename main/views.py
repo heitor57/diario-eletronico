@@ -80,9 +80,9 @@ def delete_assessment_view(request, assessment_id):
     if len(assessments) > 0:
         assessment = assessments[0]
         assessment.delete()
-        return HttpResponse('<h1>Deletado com sucesso</h1>')
+        return render(request, "main/success_deletion.html")
     else:
-        return HttpResponse('<h1>Não foi possível deletar</h1>')
+        return render(request, "main/success_deletion.html")
 
 
 def alter_assessment_view(request, assessment_id):
