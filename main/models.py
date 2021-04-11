@@ -31,7 +31,7 @@ class Course(models.Model):
 
 class Class(models.Model):
     id = models.AutoField(primary_key=True)
-    date = models.DateTimeField(auto_now_add=True,verbose_name='Data')
+    date = models.DateTimeField(verbose_name='Data')
     subject_taught = models.CharField(max_length=1000,verbose_name='Matéria lecionada')
     course = models.ForeignKey(Course, on_delete=models.CASCADE,verbose_name='Disciplina')
 
