@@ -19,15 +19,25 @@ class Course(models.Model):
 
     def __str__(self):
         return '%s, %s' % (self.id,self.name)
-# class Profile(models.Model):
-    # user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # # role = models.CharField(max_length=50)
-    # # is_student = models.BooleanField('student status', default=False)
-    # # is_teacher = models.BooleanField('teacher status', default=False)
-    # # city = models.ForeignKey(City, models.DO_NOTHING, blank=True, null=True, verbose_name='Cidade')
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    matriculation_number = models.CharField(max_length=50,verbose_name='Número de matrícula')
+    birth_date = models.DateTimeField(verbose_name='Data de nascimento')
+    cpf = models.CharField(max_length=50,verbose_name='CPF')
+    name = models.CharField(max_length=50,verbose_name='Nome')
+    telephone = models.CharField(max_length=50,verbose_name='Telefone')
+    email = models.CharField(max_length=50,verbose_name='E-mail')
+    number = models.CharField(max_length=50,verbose_name='Número')
+    complement = models.CharField(max_length=50,verbose_name='Complemento')
+    cep = models.CharField(max_length=50,verbose_name='CEP')
+    # cep = models.CharField(max_length=50,verbose_name='Nome')
+    # role = models.CharField(max_length=50)
+    # is_student = models.BooleanField('student status', default=False)
+    # is_teacher = models.BooleanField('teacher status', default=False)
+    # city = models.ForeignKey(City, models.DO_NOTHING, blank=True, null=True, verbose_name='Cidade')
 
-    # def __str__(self):
-        # return self.user.username
+    def __str__(self):
+        return self.user.username
 
 class Class(models.Model):
     id = models.AutoField(primary_key=True)
