@@ -12,10 +12,10 @@ urlpatterns = [
     # path('', views.index, name='index'),
     # url(r"^dashboard/", views.dashboard, name="dashboard"),
     # url(r"^", views.dashboard, name="dashboard"),
-    url(r'^courses/(?P<course_id>\w+)', views.course_view, name='course_view'),
+    url(r'^courses/(?P<course_id>\w+)', login_required(views.course_view), name='course_view'),
     url(r"^accounts/", include("django.contrib.auth.urls")),
-    url(r"^dashboard/", login_required(views.dashboard), name="dashboard"),
     url(r"^register/", views.register, name="register"),
+    url(r"^dashboard/", login_required(views.dashboard), name="dashboard"),
     url(r"^manage_class/(?P<course_id>\w+)",login_required(views.manage_class_view),name='manage_class'),
     url(r"^manage_assessment/(?P<course_id>\w+)",login_required(views.manage_assessment_view),name='manage_assessment'),
 
