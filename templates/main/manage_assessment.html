@@ -12,10 +12,10 @@ Olá, {{ user.username|default:'Guest' }}!
                                 {% for assessment in assessments %}
         						<li> {{ assessment.name }}, {{ assessment.type }}, {{ assessment.date }} 
                                     <a href='{% url "delete_assessment" assessment_id=assessment.id %}'> 
-                                        <img width="24px" src="{% static '/img/delete.jpg' %}"> 
-                                    </a> 
+                                        <img width="24px" src="{% static '/img/delete.jpg' %}">
+                                    </a>
                                     <a href='{% url "alter_assessment" assessment_id=assessment.id %}'> 
-                                        <img width="24px" src="{% static '/img/modify.png' %}"> 
+                                        <img width="24px" src="{% static '/img/modify.png' %}">
                                     </a>
                                 </li>
 				{% endfor %}
