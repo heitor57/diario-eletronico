@@ -76,13 +76,13 @@ def manage_assessment_view(request, course_id):
 
 def delete_assessment_view(request, assessment_id):
     # course = Course.objects.filter(id=course_id)[0]
-    assessments = Assessment.objects.filter(id=assessment_id)
-    if len(assessments) > 0:
-        assessment = assessments[0]
+    assessment = Assessment.objects.filter(id=assessment_id)[0]
+    if assessment:
+        # assessment = assessments[0]
         assessment.delete()
-        return render(request, "main/success_deletion.html")
+        return render(request, "main/simple_message.html",{'message': 'Deletado com sucesso','url_back':reverse('manage_assessment',kwargs={'course_id':assessment.course_id})})
     else:
-        return render(request, "main/success_deletion.html")
+        return render(request, "main/simple_message.html",{'message': 'Não foi possível deletar','url_back':reverse('manage_assessment',kwargs={'course_id':assessment.course_id})})
 
 
 def alter_assessment_view(request, assessment_id):
@@ -103,7 +103,7 @@ def alter_assessment_view(request, assessment_id):
 
         if form.is_valid():
             user = form.save()
-            return HttpResponse('<h1>Salvo</h1>')
+            return render(request, "main/simple_message.html",{'message': 'Salvo com sucesso','url_back':reverse('manage_assessment',kwargs={'course_id':assessment.course_id})})
         else:
             form.fields['course'].queryset= Course.objects.filter(teacher=request.user.id,
                                                completed_course=False)
@@ -127,7 +127,8 @@ def create_assessment_view(request, course_id):
         form = AssessmentForm(request.POST, initial={'course': course})
         if form.is_valid():
             user = form.save()
-            return HttpResponse('<h1>Salvo</h1>')
+                # return HttpResponse('<h1>Salvo</h1>')
+            return render(request, "main/simple_message.html",{'message': 'Salvo com sucesso','url_back':reverse('manage_assessment',kwargs={'course_id':course.id})})
         else:
             form.fields['course'].queryset= Course.objects.filter(teacher=request.user.id,
                                                completed_course=False)
