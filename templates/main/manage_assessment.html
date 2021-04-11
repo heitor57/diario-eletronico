@@ -9,7 +9,7 @@ Olá, {{ user.username|default:'Guest' }}!
 
 				<ul>
 								{% for assessment in assessments %}
-								<li> {{ assessment.id }}, {{ assessment.name }}, {{ assessment.type }}, {{ assessment.date }} <a href='{% url "delete_assessment" assessment_id=assessment.id %}'> Deletar </a>, <a href='{% url "alter_assessment" assessment_id=assessment.id %}'> Alterar </a></li>
+								<li> {{ assessment.name }}, {{ assessment.type }}, {{ assessment.date }} <a href='{% url "delete_assessment" assessment_id=assessment.id %}'> Deletar </a>, <a href='{% url "alter_assessment" assessment_id=assessment.id %}'> Alterar </a></li>
 				{% endfor %}
 				</ul>
 
