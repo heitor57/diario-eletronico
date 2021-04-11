@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+import django.forms.fields
 
 from django.contrib.auth import login
 
@@ -11,6 +12,7 @@ from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm
 from .models import Course, Class, Assessment
 from .forms import AssessmentForm
+import django.forms.models
 
 # Create your views here.
 
@@ -88,6 +90,8 @@ def alter_assessment_view(request, assessment_id):
     if request.method == "GET":
         # course = Course.objects.filter(id=assessment.course)[0]
         form = AssessmentForm(instance=assessment)
+        form.fields['course'].queryset= Course.objects.filter(teacher=request.user.id,
+                                           completed_course=False)
         # form.fields['course'].widget.attrs['readonly'] = True
         # form['course'] =
         return render(request, "main/alter_assessment.html", {"form": form})
@@ -98,27 +102,34 @@ def alter_assessment_view(request, assessment_id):
         # print(form.initial['id'])
 
         if form.is_valid():
-            form.save()
-
+            user = form.save()
             return HttpResponse('<h1>Salvo</h1>')
+        else:
+            form.fields['course'].queryset= Course.objects.filter(teacher=request.user.id,
+                                               completed_course=False)
+            return render(request, "main/create_assessment.html",
+                          {"form": form})
 
 
 def create_assessment_view(request, course_id):
+    course = Course.objects.filter(id=course_id)[0]
     if request.method == "GET":
-        form = AssessmentForm(
-            initial={'course': Course.objects.filter(id=course_id)[0]})
-        # form.fields['course'].widget.attrs['readonly'] = True
-        # form['course'] =
+        form = AssessmentForm(initial={'course': course})
+        # form.fields['course'] = django.forms.models.ModelChoiceField(
+            # queryset=Course.objects.filter(teacher=request.user.id,
+                                           # completed_course=False))
+        form.fields['course'].queryset= Course.objects.filter(teacher=request.user.id,
+                                           completed_course=False)
+        # form.
         return render(request, "main/create_assessment.html", {"form": form})
 
     elif request.method == "POST":
-
-        form = AssessmentForm(request.POST)
-
+        form = AssessmentForm(request.POST, initial={'course': course})
         if form.is_valid():
-
-            # print(form)
             user = form.save()
-            # login(request, user)
-
             return HttpResponse('<h1>Salvo</h1>')
+        else:
+            form.fields['course'].queryset= Course.objects.filter(teacher=request.user.id,
+                                               completed_course=False)
+            return render(request, "main/create_assessment.html",
+                          {"form": form})
