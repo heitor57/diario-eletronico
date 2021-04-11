@@ -1,36 +1,98 @@
+- model: auth.user
+  pk: 1
+  fields:
+    username: a
+    password: "pbkdf2_sha256$260000$BEhhQjx6bGbBWJ2bgYH0uy$WApJpbnMXyFWOPe2/YPmSyga3r2XfbgN7LdqAc9/zKY="
+- model: auth.user
+  pk: 2
+  fields:
+    username: b
+    password: "pbkdf2_sha256$260000$BEhhQjx6bGbBWJ2bgYH0uy$WApJpbnMXyFWOPe2/YPmSyga3r2XfbgN7LdqAc9/zKY="
+- model: auth.user
+  pk: 3
+  fields:
+    username: c
+    password: "pbkdf2_sha256$260000$BEhhQjx6bGbBWJ2bgYH0uy$WApJpbnMXyFWOPe2/YPmSyga3r2XfbgN7LdqAc9/zKY="
+- model: auth.user
+  pk: 4
+  fields:
+    username: d
+    password: "pbkdf2_sha256$260000$BEhhQjx6bGbBWJ2bgYH0uy$WApJpbnMXyFWOPe2/YPmSyga3r2XfbgN7LdqAc9/zKY="
 - model: main.Course
   fields:
     id: MAT1
     name: Matemática 1
+    teacher: 1
 - model: main.Course
   fields:
     id: MAT2
     name: Matemática 2
+    teacher: 1
 - model: main.Course
   fields:
     id: MAT3
     name: Matemática 3
+    teacher: 1
 - model: main.Course
   fields:
     id: MAT4
     name: Matemática 4
-- model: auth.user
-  pk: 120
+    teacher: 2
+- model: main.Class
+  #pk: 1
   fields:
-    username: a
-    password: 123
-- model: auth.user
-  pk: 121
+    id: 1
+    date: 2020-04-01 16:30:00 -5
+    course: MAT1
+    subject_taught: Conceitos básicos
+- model: main.Presence
   fields:
-    username: b
-    password: 123
-- model: auth.user
-  pk: 122
+    present: true
+    student: 3
+    _class: 1
+- model: main.Presence
   fields:
-    username: c
-    password: 123
-- model: auth.user
-  pk: 123
+    present: true
+    student: 4
+    _class: 1
+- model: main.Class
+  #pk: 1
   fields:
-    username: d
-    password: 123
+    id: 2
+    date: 2020-04-01 16:30:00 -5
+    course: MAT1
+    subject_taught: Conceitos avançados
+- model: main.Presence
+  fields:
+    present: true
+    student: 3
+    _class: 2
+- model: main.Presence
+  fields:
+    present: false
+    student: 4
+    _class: 2
+- model: main.Assessment
+  #pk: 1
+  fields:
+    id: 1
+    date: 2020-04-01 16:30:00 -5
+    course: MAT1
+    name: Prova 1
+    type: Avaliação prática
+- model: main.Assessment
+  #pk: 1
+  fields:
+    id: 2
+    date: 2020-04-01 16:30:00 -5
+    course: MAT1
+    name: Prova 2
+    type: Avaliação prática
+- model: main.Assessment
+  #pk: 1
+  fields:
+    id: 3
+    date: 2020-04-01 16:30:00 -5
+    course: MAT2
+    name: Exercícios 1
+    type: exercícios
