@@ -1,4 +1,4 @@
-from .models import Assessment,Course,Class
+from .models import Assessment, Course, Class
 from django import forms
 from django.contrib.auth.models import User
 from django.forms import ModelForm
@@ -8,28 +8,38 @@ from django.forms import ModelForm
 # class Meta(UserCreationForm.Meta):
 # fields = UserCreationForm.Meta.fields + ("email")
 
+
+class ClassForm(ModelForm):
+
+    class Meta:
+        model = Class
+        fields = '__all__'
+
+
 class AssessmentForm(ModelForm):
     # id = forms.IntegerField(widget=forms.TextInput(attrs={'readonly':'readonly'}))
     class Meta:
         model = Assessment
         # fields = ('id','name','type','date','course')
         fields = '__all__'
+
+
 # class CustomUserCreationForm(UserCreationForm):
-    # # job_title = forms.CharField(max_length=100, required=True)
-    # is_teacher = forms.BooleanField(required=False)
-    # is_student = forms.BooleanField(required=False)
+# # job_title = forms.CharField(max_length=100, required=True)
+# is_teacher = forms.BooleanField(required=False)
+# is_student = forms.BooleanField(required=False)
 
-    # # class Meta:
-        # # model = User
-        # # fields = ('password')
+# # class Meta:
+# # model = User
+# # fields = ('password')
 
-    # def save(self, commit=True):
-        # if not commit:
-            # raise NotImplementedError(
-                # "Can't create User and UserProfile without database save")
-        # user = super(UserCreateForm, self).save(commit=True)
-        # user_profile = Profile(user=user,
-                               # is_student=self.cleaned_data['is_student'],
-                               # is_teacher=self.cleaned_data['is_teacher'])
-        # user_profile.save()
-        # return user, user_profile
+# def save(self, commit=True):
+# if not commit:
+# raise NotImplementedError(
+# "Can't create User and UserProfile without database save")
+# user = super(UserCreateForm, self).save(commit=True)
+# user_profile = Profile(user=user,
+# is_student=self.cleaned_data['is_student'],
+# is_teacher=self.cleaned_data['is_teacher'])
+# user_profile.save()
+# return user, user_profile

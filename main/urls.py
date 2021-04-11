@@ -21,6 +21,11 @@ urlpatterns = [
     url(r"^create_assessment/(?P<course_id>\w+)",views.create_assessment_view,name='create_assessment'),
     url(r"^delete_assessment/(?P<assessment_id>\d+)",views.delete_assessment_view,name='delete_assessment'),
     url(r"^alter_assessment/(?P<assessment_id>\d+)",views.alter_assessment_view,name='alter_assessment'),
-    # url(r"^register/", TemplateView.as_view(template_name='foo.html')),
+
+    url(r"^manage_class/(?P<course_id>\w+)",views.manage_class_view,name='manage_class'),
+
+    url(r"^create_class/(?P<course_id>\w+)",views.create_class_view,name='create_class'),
+    url(r"^delete_class/(?P<class_id>\d+)",views.delete_class_view,name='delete_class'),
+    url(r"^alter_class/(?P<class_id>\d+)",views.alter_class_view,name='alter_class'),
 
 ]

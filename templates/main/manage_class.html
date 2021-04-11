@@ -1,13 +1,26 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 Olá, {{ user.username|default:'Guest' }}!
 
 <div>Disciplina {{ course.name }}. Menu de gerenciamento de aulas.</div>
 
+
+<a href='{% url "create_class" course_id=course.id %}'> Registrar uma nova aula </a>
+
 				<ul>
 				{% for class in classes %}
-				<li> {{ class.date }} {{ class.subject_taught }} </li>
+				<li> {{ class.date }}, {{ class.subject_taught }}
+
+                                    <a href='{% url "delete_class" class_id=class.id %}'> 
+                                        <img width="16px" src="{% static '/img/delete.jpg' %}" alt="Deletar" title="Deletar"> 
+                                    </a> 
+                                    <a href='{% url "alter_class" class_id=class.id %}'> 
+                                        <img width="18px" src="{% static '/img/modify.png' %}" alt="Alterar" title="Alterar"> 
+                                    </a>
+
+				</li>
 				{% endfor %}
 				</ul>
 
