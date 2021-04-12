@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-Hello, {{ user.username|default:'Guest' }}!
+Olá, {{ user.username|default:'Guest' }}!
 {% if courses %}
 				<ul>
 				{% for course in courses %}
