@@ -1,4 +1,4 @@
-# Usage
+## Usage
 
 	# run these two command until all changes are applied
 	./manage.py migrate
